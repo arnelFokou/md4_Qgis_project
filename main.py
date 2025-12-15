@@ -29,10 +29,24 @@ def rebuilding_cost(dataframe):
             print(f"valeur non prise en charge{_,line['type_infra']}")
     return total_amount
 
+def time_to_rebuild_hospital(dataframe):
+    list_times =[]
+    hospital = dataframe[dataframe['type_batiment']=='hôpital']
+    for _,line in hospital.iterrows():
+        longueur = line['longueur']
+        if line['type_infra'] == 'aerien':
+            list_times.append(aerian_duration_per_meter* longueur/ max_workers_per_infra)
+        elif line['type_infra'] == 'semi-aerien':
+            list_times.append(semi_aerian_duration_per_meter* longueur/ max_workers_per_infra)
+        elif line['type_infra'] == 'fourreau':
+            list_times.append(duct_duration_per_meter* longueur/ max_workers_per_infra)
+        else:
+            print(f"valeur non prise en charge{_,line['type_infra']}")
+    return max(list_times)
 
-
-
-
+    
 
 dataset_cleaned = clean_data(network_df,infra_df,building_df)
-print(f"le montant total est de {rebuilding_cost(dataset_cleaned):.2f} euros")
+# print(dataset_cleaned['type_batiment'].unique())
+print(time_to_rebuild_hospital(dataset_cleaned))
+# print(f"le montant total est de {rebuilding_cost(dataset_cleaned):.2f} euros")

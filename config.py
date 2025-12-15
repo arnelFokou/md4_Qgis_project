@@ -5,6 +5,7 @@ duct_material_cost = 900
 
 worker_cost_per_day = 300
 worker_cost_per_hour = worker_cost_per_day/8
+max_workers_per_infra = 4
 
 aerian_duration_per_meter = 2
 semi_aerian_duration_per_meter = 4
